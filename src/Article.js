@@ -13,7 +13,9 @@ export default class Article extends Component {
         const { article } = this.props
         const { isArticleOpen } = this.state
         const { isCommentsOpen } = this.state
-        const { comments } = this.props ? this.props : []
+        const { comments } = this.props
+
+        console.log(comments)
 
         const commentsList = comments.map(comment => <CommentsBlock key={comment.id} user={comment.user} text={comment.text}/>)
 
