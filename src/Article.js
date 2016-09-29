@@ -14,9 +14,8 @@ export default class Article extends Component {
         const { isOpen } = this.state
 
         const { comments } = this.props
-        //console.log(comments)
-        //const navNodes = comments ? comments.map(comment => <div key={comment.text}></div>) : [];
-        const comments = comments.map(comment => <div key={comment.id}></div>)
+
+        const commentsList = comments.map(comment => <div key={comment.id}><b>{comment.user}</b><i>{comment.text}</i></div>)
 
         const body = isOpen ? <section>{article.text}</section> : null
 
@@ -25,7 +24,7 @@ export default class Article extends Component {
                 <h3 onClick = {this.toggleOpen}>{article.title}</h3>
                     {body}
                 <div>
-                    {comments}
+                    {commentsList}
                 </div>
             </div>
         )
