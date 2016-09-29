@@ -4,6 +4,7 @@ export default class Article extends Component {
 
     state = {
         isOpen: false,
+        isCommentsOpen: false,
         opened: {
             a: true
         }
@@ -12,34 +13,36 @@ export default class Article extends Component {
     render() {
         const { article } = this.props
         const { isOpen } = this.state
+        const { isCommentsOpen } = this.state
 
         const { comments } = this.props
 
         const commentsList = comments.map(comment => <div key={comment.id}><b>{comment.user}</b><i>{comment.text}</i></div>)
 
-        const body = isOpen ? <section>{article.text}</section> : null
+        const body = isOpen ? <section>{article.text}<div onClick = {this.toggleCommentsOpen}><b>Open comments</b></div></section> : null
+
+        const commentsBox = isCommentsOpen ? <section>{commentsList}</section> : null
 
         return (
             <div>
                 <h3 onClick = {this.toggleOpen}>{article.title}</h3>
                     {body}
                 <div>
-                    {commentsList}
+                    {commentsBox}
                 </div>
             </div>
         )
     }
 
     toggleOpen = ev => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-/*
-
-        this.setState({
-            opened: {...this.state.opened, a: false}
-        })
-*/
+      this.setState({
+          isOpen: !this.state.isOpen
+      })
+    }
+    toggleCommentsOpen = evt => {
+      this.setState({
+          isCommentsOpen: !this.state.isCommentsOpen
+      })
     }
 }
 
