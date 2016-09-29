@@ -1,25 +1,23 @@
 import React, { Component } from 'react'
 
+import CommentsBlock from './Comments'
+
 export default class Article extends Component {
 
     state = {
-        isOpen: false,
-        isCommentsOpen: false,
-        opened: {
-            a: true
-        }
+        isArticleOpen: false,
+        isCommentsOpen: false
     }
 
     render() {
         const { article } = this.props
-        const { isOpen } = this.state
+        const { isArticleOpen } = this.state
         const { isCommentsOpen } = this.state
+        const { comments } = this.props ? this.props : []
 
-        const { comments } = this.props
+        const commentsList = comments.map(comment => <CommentsBlock key={comment.id} user={comment.user} text={comment.text}/>)
 
-        const commentsList = comments.map(comment => <div key={comment.id}><b>{comment.user}</b><i>{comment.text}</i></div>)
-
-        const body = isOpen ? <section>{article.text}<div onClick = {this.toggleCommentsOpen}><b>Open comments</b></div></section> : null
+        const body = isArticleOpen ? <section>{article.text}<br/><br/><div onClick = {this.toggleCommentsOpen}><b>Open comments</b></div></section> : null
 
         const commentsBox = isCommentsOpen ? <section>{commentsList}</section> : null
 
@@ -34,28 +32,14 @@ export default class Article extends Component {
         )
     }
 
-    toggleOpen = ev => {
+    toggleOpen = () => {
       this.setState({
-          isOpen: !this.state.isOpen
+          isArticleOpen: !this.state.isArticleOpen
       })
     }
-    toggleCommentsOpen = evt => {
+    toggleCommentsOpen = () => {
       this.setState({
           isCommentsOpen: !this.state.isCommentsOpen
       })
     }
 }
-
-
-
-/*
-export default (props) => {
-    const { article } = props
-
-    return (
-        <div>
-            <h3>{article.title}</h3>
-            <section>{article.text}</section>
-        </div>
-    )
-}*/
