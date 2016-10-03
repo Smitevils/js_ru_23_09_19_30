@@ -1,47 +1,50 @@
 import React, { Component } from 'react'
-
-import CommentsBlock from './Comments'
+import CommentList from './CommentList'
 
 export default class Article extends Component {
 
     state = {
-        isArticleOpen: false,
-        isCommentsOpen: false
+        opened: {
+            a: true
+        }
     }
 
     render() {
-        const { article } = this.props
-        const { isArticleOpen } = this.state
-        const { isCommentsOpen } = this.state
-        const { comments } = this.props
+        const { article, isOpen, openArticle } = this.props
 
-        console.log(comments)
-
-        const commentsList = comments.map(comment => <CommentsBlock key={comment.id} user={comment.user} text={comment.text}/>)
-
-        const body = isArticleOpen ? <section>{article.text}<br/><br/><div onClick = {this.toggleCommentsOpen}><b>Open comments</b></div></section> : null
-
-        const commentsBox = isCommentsOpen ? <section>{commentsList}</section> : null
+        const body = isOpen ? <section>{article.text}<CommentList comments = {article.comments}/></section> : null
 
         return (
             <div>
-                <h3 onClick = {this.toggleOpen}>{article.title}</h3>
-                    {body}
-                <div>
-                    {commentsBox}
-                </div>
+                <h3 onClick = {openArticle}>{article.title}</h3>
+                {body}
             </div>
         )
     }
 
-    toggleOpen = () => {
-      this.setState({
-          isArticleOpen: !this.state.isArticleOpen
-      })
-    }
-    toggleCommentsOpen = () => {
-      this.setState({
-          isCommentsOpen: !this.state.isCommentsOpen
-      })
+    toggleOpen = ev => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+/*
+
+        this.setState({
+            opened: {...this.state.opened, a: false}
+        })
+*/
     }
 }
+
+
+
+/*
+export default (props) => {
+    const { article } = props
+
+    return (
+        <div>
+            <h3>{article.title}</h3>
+            <section>{article.text}</section>
+        </div>
+    )
+}*/
